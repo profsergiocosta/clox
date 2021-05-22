@@ -1,0 +1,5 @@
+class Teste {
+    fun nome (x) {
+        return 2 * x;
+    }
+}
