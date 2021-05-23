@@ -33,10 +33,12 @@ static void runtimeError(const char *format, ...)
 void initVM()
 {
   resetStack();
+  vm.objects = NULL;
 }
 
 void freeVM()
 {
+  freeObjects();
 }
 
 void push(Value value)
@@ -169,6 +171,7 @@ static InterpretResult run()
     case OP_MULTIPLY:
       BINARY_OP(NUMBER_VAL, *);
       break;
+      vm.objects = NULL;
     case OP_DIVIDE:
       BINARY_OP(NUMBER_VAL, /);
       break;
