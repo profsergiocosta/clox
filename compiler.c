@@ -128,6 +128,7 @@ static void emitReturn()
 static uint8_t makeConstant(Value value)
 {
     int constant = addConstant(currentChunk(), value);
+
     if (constant > UINT8_MAX)
     {
         error("Too many constants in one chunk.");
@@ -145,7 +146,7 @@ static void emitConstant(Value value)
 static void endCompiler()
 {
     emitReturn();
-#ifdef DEBUG_PRINT_CODE
+#ifdef DEBUG_PRINT_CODE__
     if (!parser.hadError)
     {
         disassembleChunk(currentChunk(), "code");
@@ -191,7 +192,7 @@ static void grouping()
 static void number()
 {
     double value = strtod(parser.previous.start, NULL);
-    emitConstant(value);
+    emitConstant(NUMBER_VAL(value));
 }
 
 static void unary()
