@@ -75,6 +75,13 @@ ObjString *copyString(const char *chars, int length)
     return allocateString(heapChars, length, hash);
 }
 
+ObjNative *newNative(NativeFn function)
+{
+    ObjNative *native = ALLOCATE_OBJ(ObjNative, OBJ_NATIVE);
+    native->function = function;
+    return native;
+}
+
 static void printFunction(ObjFunction *function)
 {
     if (function->name == NULL)
@@ -94,6 +101,9 @@ void printObject(Value value)
         break;
     case OBJ_STRING:
         printf("%s", AS_CSTRING(value));
+        break;
+    case OBJ_NATIVE:
+        printf("<native fn>");
         break;
     }
 }
