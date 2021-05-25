@@ -64,6 +64,45 @@ static Value peek(int distance)
   return vm.stackTop[-1 - distance];
 }
 
+static bool call(ObjFunction *function, int argCount)
+{
+
+  if (argCount != function->arity)
+  {
+    runtimeError("Expected %d arguments but got %d.",
+                 function->arity, argCount);
+    return false;
+  }
+
+  if (vm.frameCount == FRAMES_MAX)
+  {
+    runtimeError("Stack overflow.");
+    return false;
+  }
+
+  CallFrame *frame = &vm.frames[vm.frameCount++];
+  frame->function = function;
+  frame->ip = function->chunk.code;
+  frame->slots = vm.stackTop - argCount - 1;
+  return true;
+}
+
+static bool callValue(Value callee, int argCount)
+{
+  if (IS_OBJ(callee))
+  {
+    switch (OBJ_TYPE(callee))
+    {
+    case OBJ_FUNCTION:
+      return call(AS_FUNCTION(callee), argCount);
+    default:
+      break; // Non-callable object type.
+    }
+  }
+  runtimeError("Can only call functions and classes.");
+  return false;
+}
+
 static bool isFalsey(Value value)
 {
   return IS_NIL(value) || (IS_BOOL(value) && !AS_BOOL(value));
@@ -271,6 +310,16 @@ static InterpretResult run()
       frame->ip -= offset;
       break;
     }
+    case OP_CALL:
+    {
+      int argCount = READ_BYTE();
+      if (!callValue(peek(argCount), argCount))
+      {
+        return INTERPRET_RUNTIME_ERROR;
+      }
+      frame = &vm.frames[vm.frameCount - 1];
+      break;
+    }
     default:
       return INTERPRET_OK;
     }
@@ -290,10 +339,7 @@ InterpretResult interpret(const char *source)
     return INTERPRET_COMPILE_ERROR;
 
   push(OBJ_VAL(function));
-  CallFrame *frame = &vm.frames[vm.frameCount++];
-  frame->function = function;
-  frame->ip = function->chunk.code;
-  frame->slots = vm.stack;
+  call(function, 0);
 
   return run();
 }

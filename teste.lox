@@ -3,3 +3,5 @@ fun areWeHavingItYet() {
 }
 
 print areWeHavingItYet;
+
+areWeHavingItYet();
