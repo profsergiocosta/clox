@@ -2,10 +2,8 @@ var breakfast = "beignets";
 var beverage = "cafe au lait";
 breakfast = "beignets with " + beverage;
 
-var x = 10;
-if (x > 5) { 
-  print "ok"; 
-} else {
-  print "deu ruim";
+var x = 0;
+while (x < 10) {
+  x = x + 1;
+  print (x);
 }
-print 10;
