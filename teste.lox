@@ -2,11 +2,10 @@ var breakfast = "beignets";
 var beverage = "cafe au lait";
 breakfast = "beignets with " + beverage;
 
-{
-  var a = "outer";
-  {
-    var a = a;
-    print a;
-  }
-  print a;
+var x = 10;
+if (x > 5) { 
+  print "ok"; 
+} else {
+  print "deu ruim";
 }
+print 10;
