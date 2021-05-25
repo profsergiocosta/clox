@@ -5,3 +5,11 @@ fun areWeHavingItYet() {
 print areWeHavingItYet;
 
 areWeHavingItYet();
+
+
+fun dobro (x) {
+  return 2 * x;
+}
+
+var a = dobro (6);
+print a;
