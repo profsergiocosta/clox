@@ -1,13 +1,5 @@
-var breakfast = "beignets";
-var beverage = "cafe au lait";
-breakfast = "beignets with " + beverage;
-
-var x = 0;
-while (x < 10) {
-  x = x + 1;
-  print (x);
+fun areWeHavingItYet() {
+  print "Yes we are!";
 }
 
-for (var i =0; i < 5; i=i+1) {
-  print i;
-}
+print areWeHavingItYet;
