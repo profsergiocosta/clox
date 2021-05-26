@@ -1,11 +1,8 @@
-fun makeClosure(value) {
-  fun closure() {
-    print value;
-  }
-  return closure;
+fun fib(n) {
+  if (n < 2) return n;
+  return fib(n - 2) + fib(n - 1);
 }
 
-var doughnut = makeClosure("doughnut");
-var bagel = makeClosure("bagel");
-doughnut();
-bagel();
+var start = clock();
+print fib(10);
+print clock() - start;
