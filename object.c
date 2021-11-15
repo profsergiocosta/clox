@@ -15,6 +15,12 @@ static Obj *allocateObject(size_t size, ObjType type)
     object->type = type;
     object->next = vm.objects;
     vm.objects = object;
+
+    #ifdef DEBUG_LOG_GC
+  printf("-- gc end\n");
+#endif
+
+
     return object;
 }
 
